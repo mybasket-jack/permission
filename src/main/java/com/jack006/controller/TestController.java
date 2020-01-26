@@ -1,9 +1,13 @@
 package com.jack006.controller;
 
+import com.jack006.common.ApplicationContextHelper;
 import com.jack006.common.JsonData;
+import com.jack006.dao.SysAclModuleMapper;
 import com.jack006.exception.ParamException;
+import com.jack006.model.SysAclModule;
 import com.jack006.param.TestVo;
 import com.jack006.util.BeanValidator;
+import com.jack006.util.JsonMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections.MapUtils;
 import org.springframework.stereotype.Controller;
@@ -35,6 +39,9 @@ public class TestController {
     @ResponseBody
     public JsonData validator(TestVo vo) throws ParamException {
         log.info("validator");
+        SysAclModuleMapper moduleMapper =  ApplicationContextHelper.popBean(SysAclModuleMapper.class);
+        SysAclModule module = moduleMapper.selectByPrimaryKey(1);
+        log.info(JsonMapper.obj2String(module));
         BeanValidator.check(vo);
         return JsonData.success("test validator");
     }

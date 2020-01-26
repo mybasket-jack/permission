@@ -11,10 +11,16 @@
     <!--启动注解驱动的 spring mvc-->
     <mvc:annotation-driven/>
 
+    <mvc:interceptors>
+        <bean class="com.jack006.common.HttpInterceptor"/>
+    </mvc:interceptors>
+
     <!--启动包扫描的功能-->
     <context:component-scan base-package="com.jack006.controller"/>
     <context:component-scan base-package="com.jack006.service"/>
 
+    <!--配置开启加载applicationContextHelper类-->
+    <bean class="com.jack006.common.ApplicationContextHelper" lazy-init="false" />
     <!--sping servlet的配置-->
     <bean class="com.jack006.common.SpringExceptionResolver" />
     <bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping"> </bean>

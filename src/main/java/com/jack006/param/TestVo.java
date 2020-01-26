@@ -3,8 +3,10 @@ package com.jack006.param;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.validator.constraints.NotBlank;
+import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.validation.constraints.NotNull;
+import java.util.List;
 
 /**
  * TODO
@@ -21,4 +23,6 @@ public class TestVo {
 
     @NotNull
     private Integer id;
+
+    private List<String> str;
 }
