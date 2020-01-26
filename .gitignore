@@ -1,6 +1,6 @@
 .DS_Store
-/target
-
+/target/
+/.idea/
 # Editor directories and files
 .idea
 .vscode
