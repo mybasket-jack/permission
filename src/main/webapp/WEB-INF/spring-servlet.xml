@@ -19,6 +19,13 @@
     <context:component-scan base-package="com.jack006.controller"/>
     <context:component-scan base-package="com.jack006.service"/>
 
+    <mvc:resources location="/js/" mapping="/js/**"/>
+    <mvc:resources location="/css/" mapping="/css/**"/>
+    <mvc:resources location="/bootstrap3.3.5/" mapping="/bootstrap3.3.5/**"/>
+    <mvc:resources location="/assets/" mapping="/assets/**"/>
+    <mvc:resources location="/ztree/" mapping="/ztree/**"/>
+
+
     <!--配置开启加载applicationContextHelper类-->
     <bean class="com.jack006.common.ApplicationContextHelper" lazy-init="false" />
     <!--sping servlet的配置-->
@@ -30,7 +37,7 @@
     <bean id="jsonView" class="org.springframework.web.servlet.view.json.MappingJackson2JsonView"/>
     <!--jsp页面返回的时候-->
     <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
-        <property name="prefix" value="/views/"/>
+        <property name="prefix" value="/WEB-INF/views/"/>
         <property name="suffix" value=".jsp"/>
     </bean>
 </beans>
