@@ -1,6 +1,7 @@
 .DS_Store
 /target/
 /.idea/
+/src/main/resources/dbsetting.properties
 # Editor directories and files
 .idea
 .vscode
