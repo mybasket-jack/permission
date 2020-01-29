@@ -40,7 +40,7 @@ public class SysDeptSevice {
 
         dept.setLevel(LevelUtil.calculateLevel(getLevel(deptParam.getParentId()),deptParam.getParentId()));
         dept.setOperator(RequestHolder.getCurrentUser().getUsername());
-        dept.setOperatorIp(IpUtil.getRemoteIp(RequestHolder.getCurrentRequest()));
+        dept.setOperatorIp(IpUtil.getUserIP(RequestHolder.getCurrentRequest()));
         dept.setOperatorTime(new Date());
         sysDeptMapper.insertSelective(dept);
     }
@@ -59,14 +59,13 @@ public class SysDeptSevice {
                 .seq(deptParam.getSeq()).remark(deptParam.getRemark()).build();
         after.setLevel(LevelUtil.calculateLevel(getLevel(deptParam.getParentId()),deptParam.getParentId()));
         after.setOperator(RequestHolder.getCurrentUser().getUsername());
-        after.setOperatorIp(IpUtil.getRemoteIp(RequestHolder.getCurrentRequest()));
+        after.setOperatorIp(IpUtil.getUserIP(RequestHolder.getCurrentRequest()));
         after.setOperatorTime(new Date());
         updateWithChild(before,after);
     }
 
     @Transactional
     public void updateWithChild(SysDept before, SysDept after) {
-
         String newLevelPrefix = after.getLevel();
         String oldLevelPrefix = before.getLevel();
         if (!after.getLevel().equals(before.getLevel())){

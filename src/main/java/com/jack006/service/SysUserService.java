@@ -53,7 +53,7 @@ public class SysUserService {
                 .mail(param.getMail()).password(encrytedPassword).status(param.getStatus())
                 .deptId(param.getDeptId()).remark(param.getRemark()).build();
         sysUser.setOperator(RequestHolder.getCurrentUser().getUsername());
-        sysUser.setOperatorIp(IpUtil.getRemoteIp(RequestHolder.getCurrentRequest()));
+        sysUser.setOperatorIp(IpUtil.getUserIP(RequestHolder.getCurrentRequest()));
         sysUser.setOperatorTime(new Date());
         // TODO： sendEmail 通过邮件通知用户
         Set<String> receiveSetStr = new HashSet<>();
@@ -79,7 +79,7 @@ public class SysUserService {
                 .mail(param.getMail()).password(before.getPassword()).status(param.getStatus())
                 .deptId(param.getDeptId()).remark(param.getRemark()).build();
         after.setOperator(RequestHolder.getCurrentUser().getUsername());
-        after.setOperatorIp(IpUtil.getRemoteIp(RequestHolder.getCurrentRequest()));
+        after.setOperatorIp(IpUtil.getUserIP(RequestHolder.getCurrentRequest()));
         after.setOperatorTime(new Date());
         sysUserMapper.updateByPrimaryKeySelective(after);
     }
