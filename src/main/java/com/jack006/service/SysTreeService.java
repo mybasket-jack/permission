@@ -11,6 +11,7 @@ import org.apache.commons.collections.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -24,7 +25,7 @@ import java.util.List;
 @Service
 public class SysTreeService {
 
-    @Autowired
+    @Resource
     private SysDeptMapper sysDeptMapper;
 
     public List<DeptLevelDto> deptTree(){

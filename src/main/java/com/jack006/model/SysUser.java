@@ -1,13 +1,22 @@
 package com.jack006.model;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
+
 import java.util.Date;
 
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
+@ToString
 public class SysUser {
     private Integer id;
 
     private String username;
 
-    private String telephpne;
+    private String telephone;
 
     private String mail;
 
@@ -41,12 +50,12 @@ public class SysUser {
         this.username = username == null ? null : username.trim();
     }
 
-    public String getTelephpne() {
-        return telephpne;
+    public String getTelephone() {
+        return telephone;
     }
 
-    public void setTelephpne(String telephpne) {
-        this.telephpne = telephpne == null ? null : telephpne.trim();
+    public void setTelephone(String telephone) {
+        this.telephone = telephone;
     }
 
     public String getMail() {
