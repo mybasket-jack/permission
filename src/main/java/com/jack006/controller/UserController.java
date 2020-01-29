@@ -30,7 +30,7 @@ public class UserController {
     public void logout(HttpServletRequest request, HttpServletResponse response) throws IOException {
         // 移除session
         request.getSession().invalidate();
-        String path = "signin.jsp";
+        String path = "/signin.jsp";
         response.sendRedirect(path);
     }
 
@@ -68,7 +68,7 @@ public class UserController {
         if (StringUtils.isNotBlank(ret)) {
             request.setAttribute("ret",ret);
         }
-        String path = "signin.jsp";
+        String path = "/signin.jsp";
         // 请求转发
         request.getRequestDispatcher(path).forward(request,response);
         return ;

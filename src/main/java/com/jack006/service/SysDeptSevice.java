@@ -1,19 +1,19 @@
 package com.jack006.service;
 
 import com.google.common.base.Preconditions;
+import com.jack006.common.RequestHolder;
 import com.jack006.dao.SysDeptMapper;
 import com.jack006.exception.ParamException;
 import com.jack006.model.SysDept;
 import com.jack006.param.DeptParam;
 import com.jack006.util.BeanValidator;
+import com.jack006.util.IpUtil;
 import com.jack006.util.LevelUtil;
 import org.apache.commons.collections.CollectionUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
-import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
@@ -39,8 +39,8 @@ public class SysDeptSevice {
                 .seq(deptParam.getSeq()).remark(deptParam.getRemark()).build();
 
         dept.setLevel(LevelUtil.calculateLevel(getLevel(deptParam.getParentId()),deptParam.getParentId()));
-        dept.setOperator("system"); // TODO
-        dept.setOperatorIp("127.0.0.1"); // TODO
+        dept.setOperator(RequestHolder.getCurrentUser().getUsername());
+        dept.setOperatorIp(IpUtil.getRemoteIp(RequestHolder.getCurrentRequest()));
         dept.setOperatorTime(new Date());
         sysDeptMapper.insertSelective(dept);
     }
@@ -58,14 +58,14 @@ public class SysDeptSevice {
         SysDept after = SysDept.builder().id(deptParam.getId()).name(deptParam.getName()).parentId(deptParam.getParentId())
                 .seq(deptParam.getSeq()).remark(deptParam.getRemark()).build();
         after.setLevel(LevelUtil.calculateLevel(getLevel(deptParam.getParentId()),deptParam.getParentId()));
-        after.setOperator("system"); // TODO
-        after.setOperatorIp("127.0.0.1"); // TODO
+        after.setOperator(RequestHolder.getCurrentUser().getUsername());
+        after.setOperatorIp(IpUtil.getRemoteIp(RequestHolder.getCurrentRequest()));
         after.setOperatorTime(new Date());
         updateWithChild(before,after);
     }
 
     @Transactional
-    private void updateWithChild(SysDept before, SysDept after) {
+    public void updateWithChild(SysDept before, SysDept after) {
 
         String newLevelPrefix = after.getLevel();
         String oldLevelPrefix = before.getLevel();

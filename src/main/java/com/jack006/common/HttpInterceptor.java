@@ -45,5 +45,12 @@ public class HttpInterceptor extends HandlerInterceptorAdapter {
         String url = request.getRequestURI();
         long start = (Long) request.getAttribute(START_TIME);
         long end = System.currentTimeMillis();
-        log.info("request completed, url:{}, cost:{}",url, end - start );    }
+        // 移除当前的进程
+        removeThreadLocalInfo();
+        log.info("request completed, url:{}, cost:{}",url, end - start );
+    }
+
+    public void removeThreadLocalInfo() {
+        RequestHolder.remove();;
+    }
 }

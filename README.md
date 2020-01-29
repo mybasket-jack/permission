@@ -8,3 +8,5 @@
 - 封装分页插件(pageQuery, PageResult, page.jsp)
 - 编写分页后台
 - 用户分页信息展示
+- ThreadLocal, LoginFilter实现登录请求的拦截（获取登录用户信息）
+- IPUtil, MailUtil 引入
