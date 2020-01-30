@@ -7,7 +7,6 @@ import com.jack006.dao.SysAclModuleMapper;
 import com.jack006.dao.SysDeptMapper;
 import com.jack006.dto.AclModuleLevelDto;
 import com.jack006.dto.DeptLevelDto;
-import com.jack006.model.SysAcl;
 import com.jack006.model.SysAclModule;
 import com.jack006.model.SysDept;
 import com.jack006.util.LevelUtil;
@@ -49,7 +48,7 @@ public class SysTreeService {
      * @param dtoList
      * @return
      */
-    public List<AclModuleLevelDto> aclModuleListToTree(List<AclModuleLevelDto> dtoList) {
+    private List<AclModuleLevelDto> aclModuleListToTree(List<AclModuleLevelDto> dtoList) {
         if (CollectionUtils.isEmpty(dtoList)) {
             return Lists.newArrayList();
         }
@@ -65,7 +64,7 @@ public class SysTreeService {
         }
 
         // 排序 按seq 从小到大
-        Collections.sort(rootList,aclModuleComparator);
+        Collections.sort(rootList,aclModuleSeqComparator);
         // 构建树结构 参数为 首层结构 首层level map数据
         transformAclModuleTree(rootList,LevelUtil.ROOT,levelAclModuleMap);
         return rootList;
@@ -78,18 +77,18 @@ public class SysTreeService {
      * @param level 对应的level
      * @param levelAclModuleMap 构建的权限模块map
      */
-    public void transformAclModuleTree(List<AclModuleLevelDto> dtoList, String level, Multimap<String, AclModuleLevelDto> levelAclModuleMap) {
+    private void transformAclModuleTree(List<AclModuleLevelDto> dtoList, String level, Multimap<String, AclModuleLevelDto> levelAclModuleMap) {
         for (int i = 0; i < dtoList.size(); i++) {
             // 遍历首层的权限模块
             AclModuleLevelDto dto = dtoList.get(i);
             // 得到当前要处理的层级
-            String nextLevel = LevelUtil.calculateLevel(level, dto.getParentId());
+            String nextLevel = LevelUtil.calculateLevel(level, dto.getId());
             // 取出下一个层级的列表
             List<AclModuleLevelDto> tempList = (List<AclModuleLevelDto>) levelAclModuleMap.get(nextLevel);
             // 判断是否存在权限模块
             if (CollectionUtils.isNotEmpty(tempList)) {
                 // 排序
-                Collections.sort(tempList, aclModuleComparator);
+                Collections.sort(tempList, aclModuleSeqComparator);
                 // 设置当前层级的模块
                 dto.setAclModuleList(tempList);
                 // 递归逐层处理 下一级的权限模块
@@ -110,7 +109,7 @@ public class SysTreeService {
         return deptListToTree(dtoList);
     }
 
-    public List<DeptLevelDto> deptListToTree(List<DeptLevelDto> deptLevelList) {
+    private List<DeptLevelDto> deptListToTree(List<DeptLevelDto> deptLevelList) {
         if (CollectionUtils.isEmpty(deptLevelList)) {
             return Lists.newArrayList();
         }
@@ -135,7 +134,7 @@ public class SysTreeService {
     // level:0, 0. all a-> 0.1 0.2
     // level:0.1
     // level:0.2
-    public void transformDeptTree(List<DeptLevelDto> deptLevelList, String level, Multimap<String, DeptLevelDto> levelDeptMap){
+    private void transformDeptTree(List<DeptLevelDto> deptLevelList, String level, Multimap<String, DeptLevelDto> levelDeptMap){
         for (int i =0; i< deptLevelList.size(); i++) {
             // 遍历该层的每个元素
             DeptLevelDto deptLevelDto = deptLevelList.get(i);
@@ -154,14 +153,14 @@ public class SysTreeService {
         }
     }
 
-    public Comparator<DeptLevelDto> deptSeqComparator = new Comparator<DeptLevelDto>() {
+    private Comparator<DeptLevelDto> deptSeqComparator = new Comparator<DeptLevelDto>() {
         @Override
         public int compare(DeptLevelDto o1, DeptLevelDto o2) {
             return o1.getSeq() - o2.getSeq();
         }
     };
 
-    public Comparator<AclModuleLevelDto> aclModuleComparator = new Comparator<AclModuleLevelDto>() {
+    private Comparator<AclModuleLevelDto> aclModuleSeqComparator = new Comparator<AclModuleLevelDto>() {
         @Override
         public int compare(AclModuleLevelDto o1, AclModuleLevelDto o2) {
             return o1.getSeq() - o2.getSeq();

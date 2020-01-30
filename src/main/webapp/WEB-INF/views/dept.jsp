@@ -522,7 +522,7 @@
                 }
             })
         }
-        function updateDept(isCreate, suceessCallBack, failCallback) {
+        function updateDept(isCreate, successCallBack, failCallback) {
             $.ajax({
                 url: isCreate ? "/sys/dept/save.json" : "/sys/dept/update.json",
                 data: $("#deptForm").serializeArray(),
@@ -530,8 +530,8 @@
                 success: function(result) {
                     if (result.ret) {
                         loadDeptTree();
-                        if (suceessCallBack) {
-                            suceessCallBack(result);
+                        if (successCallBack) {
+                            successCallBack(result);
                         }
                     } else {
                         if (failCallback) {

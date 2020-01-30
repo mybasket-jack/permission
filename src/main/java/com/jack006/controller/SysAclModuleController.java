@@ -1,9 +1,11 @@
 package com.jack006.controller;
 
 import com.jack006.common.JsonData;
+import com.jack006.dto.AclModuleLevelDto;
 import com.jack006.param.AclModuleParam;
 import com.jack006.param.DeptParam;
 import com.jack006.service.SysAclModuleService;
+import com.jack006.service.SysTreeService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -11,6 +13,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 /**
  * 权限控制类
@@ -25,6 +28,8 @@ public class SysAclModuleController {
 
     @Resource
     private SysAclModuleService sysAclModuleService;
+    @Resource
+    private SysTreeService sysTreeService;
 
     @RequestMapping("acl.page")
     public ModelAndView page() {
@@ -48,6 +53,7 @@ public class SysAclModuleController {
     @RequestMapping("/tree.json")
     @ResponseBody
     public JsonData tree(){
-        return JsonData.success();
+        List<AclModuleLevelDto> dtoList = sysTreeService.aclModuleTree();
+        return JsonData.success(dtoList);
     }
 }

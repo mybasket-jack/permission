@@ -5,13 +5,12 @@ import com.jack006.common.RequestHolder;
 import com.jack006.dao.SysAclModuleMapper;
 import com.jack006.exception.ParamException;
 import com.jack006.model.SysAclModule;
-import com.jack006.model.SysDept;
 import com.jack006.param.AclModuleParam;
-import com.jack006.param.DeptParam;
 import com.jack006.util.BeanValidator;
 import com.jack006.util.IpUtil;
 import com.jack006.util.LevelUtil;
 import org.apache.commons.collections.CollectionUtils;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
@@ -24,6 +23,7 @@ import java.util.List;
  * @Author jack
  * @Since 1.0 2020/1/29 21:42
  */
+@Service
 public class SysAclModuleService {
 
     @Resource
@@ -37,6 +37,7 @@ public class SysAclModuleService {
 
         SysAclModule aclModule = SysAclModule.builder().name(param.getName()).parentId(param.getParentId())
                 .seq(param.getSeq()).status(param.getStatus()).remark(param.getRemark()).build();
+        aclModule.setLevel(LevelUtil.calculateLevel(getLevel(param.getParentId()),param.getParentId()));
         aclModule.setOperator(RequestHolder.getCurrentUser().getUsername());
         aclModule.setOperatorIp(IpUtil.getUserIP(RequestHolder.getCurrentRequest()));
         aclModule.setOperatorTime(new Date());

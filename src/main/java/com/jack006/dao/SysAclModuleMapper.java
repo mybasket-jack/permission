@@ -1,7 +1,6 @@
 package com.jack006.dao;
 
 import com.jack006.model.SysAclModule;
-import com.jack006.model.SysDept;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
