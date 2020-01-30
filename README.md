@@ -18,5 +18,14 @@
 - 编写权限模块树的实现接口
 - 编写权限模块的页面（新增， 编辑）
 - 编写权限模块交互功能实现
+
+# 权限点开发
 - 编写权限点的 (AclParam AclController AclService AclMapper)
 - 下载font-awesome包，并引入（使用mvc:resource 加载fonts文件夹）
+
+# 角色模块
+- 新建角色控制类 RoleController RoleService
+- 新建角色参数类 RoleParam
+- 编写 save update service逻辑
+- 编写RoleController
+- 编写角色管理页面，新增和修改的交互

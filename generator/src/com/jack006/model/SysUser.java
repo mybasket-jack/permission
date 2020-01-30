@@ -7,7 +7,7 @@ public class SysUser {
 
     private String username;
 
-    private String telephpne;
+    private String telephone;
 
     private String mail;
 
@@ -41,12 +41,12 @@ public class SysUser {
         this.username = username == null ? null : username.trim();
     }
 
-    public String getTelephpne() {
-        return telephpne;
+    public String getTelephone() {
+        return telephone;
     }
 
-    public void setTelephpne(String telephpne) {
-        this.telephpne = telephpne == null ? null : telephpne.trim();
+    public void setTelephone(String telephone) {
+        this.telephone = telephone == null ? null : telephone.trim();
     }
 
     public String getMail() {

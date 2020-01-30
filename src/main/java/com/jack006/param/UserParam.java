@@ -12,7 +12,7 @@ import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 
 /**
- * TODO
+ * 用户参数对象
  *
  * @Author jack
  * @Since 1.0 2020/1/28 20:52
