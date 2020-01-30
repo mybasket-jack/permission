@@ -9,7 +9,7 @@
 <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
 <!-- bootstrap & fontawesome -->
 <link rel="stylesheet" href="/assets/css/bootstrap.min.css"/>
-<link href="http://netdna.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet">
+<link href="/css/font-awesome.min.css" rel="stylesheet" type="text/css">
 <!-- page specific plugin styles -->
 <!-- text fonts -->
 <link rel="stylesheet" href="/assets/css/google-fonts.css"/>

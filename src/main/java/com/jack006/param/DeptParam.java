@@ -22,7 +22,7 @@ public class DeptParam {
     private Integer id;
 
     @NotBlank(message = "部门名称不能为空")
-    @Length(max = 15, min = 2, message = "部门名称需要在2-15个字之间")
+    @Length(max = 15, min = 2, message = "部门名称长度需要在2-15个字之间")
     private String name;
 
     private Integer parentId = 0;

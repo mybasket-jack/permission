@@ -342,7 +342,6 @@
         // 渲染用户列表  函数需要双引号包裹
         function renderUserListAndPage (result, url) {
             if (result.ret ) {
-                console.log(result.data.total);
                 if (result.data.total > 0) {
                     var rendered = Mustache.render(userListTemplate, {
                         userList : result.data.data,
@@ -354,6 +353,7 @@
                         },
                         "bold" : function() {
                             return function (text, render) {
+                                // 取出render中的值
                                var status = render(text);
                                if (status == '有效') {
                                    return "<span class='label label-sm label-success'>有效</span>"

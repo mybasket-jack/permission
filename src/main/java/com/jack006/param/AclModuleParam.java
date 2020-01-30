@@ -24,7 +24,7 @@ public class AclModuleParam {
     private Integer id;
 
     @NotBlank(message = "权限模块名称不可以为空")
-    @Length(min = 2, max = 20, message = "权限模块名称需要在2-20个字之间")
+    @Length(min = 2, max = 20, message = "权限模块名称长度需要在2-20个字之间")
     private String name;
 
     private Integer parentId = 0;

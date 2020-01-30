@@ -18,3 +18,5 @@
 - 编写权限模块树的实现接口
 - 编写权限模块的页面（新增， 编辑）
 - 编写权限模块交互功能实现
+- 编写权限点的 (AclParam AclController AclService AclMapper)
+- 下载font-awesome包，并引入（使用mvc:resource 加载fonts文件夹）
