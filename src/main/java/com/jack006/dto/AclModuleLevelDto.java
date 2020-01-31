@@ -2,7 +2,6 @@ package com.jack006.dto;
 
 import com.google.common.collect.Lists;
 import com.jack006.model.SysAclModule;
-import com.jack006.model.SysDept;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -22,6 +21,8 @@ import java.util.List;
 public class AclModuleLevelDto extends SysAclModule {
 
     private List<AclModuleLevelDto> aclModuleList = Lists.newArrayList();
+
+    private List<AclDto> aclList = Lists.newArrayList();
 
     public static AclModuleLevelDto adapt (SysAclModule sysAclModule) {
         AclModuleLevelDto dto = new AclModuleLevelDto();

@@ -1,11 +1,18 @@
 package com.jack006.model;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.NoArgsConstructor;
+
 import java.util.Date;
 
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class SysRoleAcl {
     private Integer id;
 
-    private String roleId;
+    private Integer roleId;
 
     private Integer aclId;
 
@@ -23,12 +30,12 @@ public class SysRoleAcl {
         this.id = id;
     }
 
-    public String getRoleId() {
+    public Integer getRoleId() {
         return roleId;
     }
 
-    public void setRoleId(String roleId) {
-        this.roleId = roleId == null ? null : roleId.trim();
+    public void setRoleId(Integer roleId) {
+        this.roleId = roleId ;
     }
 
     public Integer getAclId() {

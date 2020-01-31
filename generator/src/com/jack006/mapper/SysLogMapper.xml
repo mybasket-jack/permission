@@ -1,32 +1,32 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.jack006.dao.SysLogMapper">
-  <resultMap id="BaseResultMap" type="com.jack006.model.SysLog">
-    <id column="id" jdbcType="INTEGER" property="id" />
-    <result column="type" jdbcType="INTEGER" property="type" />
-    <result column="target_id" jdbcType="INTEGER" property="targetId" />
-    <result column="old_value" jdbcType="VARCHAR" property="oldValue" />
-    <result column="new_value" jdbcType="VARCHAR" property="newValue" />
-    <result column="operator" jdbcType="VARCHAR" property="operator" />
-    <result column="operator_time" jdbcType="TIMESTAMP" property="operatorTime" />
-    <result column="operator_ip" jdbcType="VARCHAR" property="operatorIp" />
-    <result column="status" jdbcType="INTEGER" property="status" />
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jack006.dao.SysLogMapper" >
+  <resultMap id="BaseResultMap" type="com.jack006.model.SysLog" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="type" property="type" jdbcType="INTEGER" />
+    <result column="target_id" property="targetId" jdbcType="INTEGER" />
+    <result column="old_value" property="oldValue" jdbcType="VARCHAR" />
+    <result column="new_value" property="newValue" jdbcType="VARCHAR" />
+    <result column="operator" property="operator" jdbcType="VARCHAR" />
+    <result column="operator_time" property="operatorTime" jdbcType="TIMESTAMP" />
+    <result column="operator_ip" property="operatorIp" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="INTEGER" />
   </resultMap>
-  <sql id="Base_Column_List">
+  <sql id="Base_Column_List" >
     id, type, target_id, old_value, new_value, operator, operator_time, operator_ip, 
     status
   </sql>
-  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
     <include refid="Base_Column_List" />
     from sys_log
     where id = #{id,jdbcType=INTEGER}
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from sys_log
     where id = #{id,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="com.jack006.model.SysLog">
+  <insert id="insert" parameterType="com.jack006.model.SysLog" >
     insert into sys_log (id, type, target_id, 
       old_value, new_value, operator, 
       operator_time, operator_ip, status
@@ -36,374 +36,98 @@
       #{operatorTime,jdbcType=TIMESTAMP}, #{operatorIp,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER}
       )
   </insert>
-  <insert id="insertSelective" parameterType="com.jack006.model.SysLog">
+  <insert id="insertSelective" parameterType="com.jack006.model.SysLog" >
     insert into sys_log
-    <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="id != null">
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
         id,
       </if>
-      <if test="type != null">
+      <if test="type != null" >
         type,
       </if>
-      <if test="targetId != null">
+      <if test="targetId != null" >
         target_id,
       </if>
-      <if test="oldValue != null">
+      <if test="oldValue != null" >
         old_value,
       </if>
-      <if test="newValue != null">
+      <if test="newValue != null" >
         new_value,
       </if>
-      <if test="operator != null">
+      <if test="operator != null" >
         operator,
       </if>
-      <if test="operatorTime != null">
+      <if test="operatorTime != null" >
         operator_time,
       </if>
-      <if test="operatorIp != null">
+      <if test="operatorIp != null" >
         operator_ip,
       </if>
-      <if test="status != null">
+      <if test="status != null" >
         status,
       </if>
     </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="id != null">
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
         #{id,jdbcType=INTEGER},
       </if>
-      <if test="type != null">
+      <if test="type != null" >
         #{type,jdbcType=INTEGER},
       </if>
-      <if test="targetId != null">
+      <if test="targetId != null" >
         #{targetId,jdbcType=INTEGER},
       </if>
-      <if test="oldValue != null">
+      <if test="oldValue != null" >
         #{oldValue,jdbcType=VARCHAR},
       </if>
-      <if test="newValue != null">
+      <if test="newValue != null" >
         #{newValue,jdbcType=VARCHAR},
       </if>
-      <if test="operator != null">
+      <if test="operator != null" >
         #{operator,jdbcType=VARCHAR},
       </if>
-      <if test="operatorTime != null">
+      <if test="operatorTime != null" >
         #{operatorTime,jdbcType=TIMESTAMP},
       </if>
-      <if test="operatorIp != null">
+      <if test="operatorIp != null" >
         #{operatorIp,jdbcType=VARCHAR},
       </if>
-      <if test="status != null">
+      <if test="status != null" >
         #{status,jdbcType=INTEGER},
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.jack006.model.SysLog">
+  <update id="updateByPrimaryKeySelective" parameterType="com.jack006.model.SysLog" >
     update sys_log
-    <set>
-      <if test="type != null">
+    <set >
+      <if test="type != null" >
         type = #{type,jdbcType=INTEGER},
       </if>
-      <if test="targetId != null">
+      <if test="targetId != null" >
         target_id = #{targetId,jdbcType=INTEGER},
       </if>
-      <if test="oldValue != null">
+      <if test="oldValue != null" >
         old_value = #{oldValue,jdbcType=VARCHAR},
       </if>
-      <if test="newValue != null">
+      <if test="newValue != null" >
         new_value = #{newValue,jdbcType=VARCHAR},
       </if>
-      <if test="operator != null">
+      <if test="operator != null" >
         operator = #{operator,jdbcType=VARCHAR},
       </if>
-      <if test="operatorTime != null">
+      <if test="operatorTime != null" >
         operator_time = #{operatorTime,jdbcType=TIMESTAMP},
       </if>
-      <if test="operatorIp != null">
+      <if test="operatorIp != null" >
         operator_ip = #{operatorIp,jdbcType=VARCHAR},
       </if>
-      <if test="status != null">
+      <if test="status != null" >
         status = #{status,jdbcType=INTEGER},
       </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.jack006.model.SysLog">
-    update sys_log
-    set type = #{type,jdbcType=INTEGER},
-      target_id = #{targetId,jdbcType=INTEGER},
-      old_value = #{oldValue,jdbcType=VARCHAR},
-      new_value = #{newValue,jdbcType=VARCHAR},
-      operator = #{operator,jdbcType=VARCHAR},
-      operator_time = #{operatorTime,jdbcType=TIMESTAMP},
-      operator_ip = #{operatorIp,jdbcType=VARCHAR},
-      status = #{status,jdbcType=INTEGER}
-    where id = #{id,jdbcType=INTEGER}
-  </update>
-  <resultMap id="BaseResultMap" type="com.jack006.model.SysLog">
-    <id column="id" jdbcType="INTEGER" property="id" />
-    <result column="type" jdbcType="INTEGER" property="type" />
-    <result column="target_id" jdbcType="INTEGER" property="targetId" />
-    <result column="old_value" jdbcType="VARCHAR" property="oldValue" />
-    <result column="new_value" jdbcType="VARCHAR" property="newValue" />
-    <result column="operator" jdbcType="VARCHAR" property="operator" />
-    <result column="operator_time" jdbcType="TIMESTAMP" property="operatorTime" />
-    <result column="operator_ip" jdbcType="VARCHAR" property="operatorIp" />
-    <result column="status" jdbcType="INTEGER" property="status" />
-  </resultMap>
-  <sql id="Base_Column_List">
-    id, type, target_id, old_value, new_value, operator, operator_time, operator_ip, 
-    status
-  </sql>
-  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
-    select 
-    <include refid="Base_Column_List" />
-    from sys_log
-    where id = #{id,jdbcType=INTEGER}
-  </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
-    delete from sys_log
-    where id = #{id,jdbcType=INTEGER}
-  </delete>
-  <insert id="insert" parameterType="com.jack006.model.SysLog">
-    insert into sys_log (id, type, target_id, 
-      old_value, new_value, operator, 
-      operator_time, operator_ip, status
-      )
-    values (#{id,jdbcType=INTEGER}, #{type,jdbcType=INTEGER}, #{targetId,jdbcType=INTEGER}, 
-      #{oldValue,jdbcType=VARCHAR}, #{newValue,jdbcType=VARCHAR}, #{operator,jdbcType=VARCHAR}, 
-      #{operatorTime,jdbcType=TIMESTAMP}, #{operatorIp,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER}
-      )
-  </insert>
-  <insert id="insertSelective" parameterType="com.jack006.model.SysLog">
-    insert into sys_log
-    <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="id != null">
-        id,
-      </if>
-      <if test="type != null">
-        type,
-      </if>
-      <if test="targetId != null">
-        target_id,
-      </if>
-      <if test="oldValue != null">
-        old_value,
-      </if>
-      <if test="newValue != null">
-        new_value,
-      </if>
-      <if test="operator != null">
-        operator,
-      </if>
-      <if test="operatorTime != null">
-        operator_time,
-      </if>
-      <if test="operatorIp != null">
-        operator_ip,
-      </if>
-      <if test="status != null">
-        status,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="id != null">
-        #{id,jdbcType=INTEGER},
-      </if>
-      <if test="type != null">
-        #{type,jdbcType=INTEGER},
-      </if>
-      <if test="targetId != null">
-        #{targetId,jdbcType=INTEGER},
-      </if>
-      <if test="oldValue != null">
-        #{oldValue,jdbcType=VARCHAR},
-      </if>
-      <if test="newValue != null">
-        #{newValue,jdbcType=VARCHAR},
-      </if>
-      <if test="operator != null">
-        #{operator,jdbcType=VARCHAR},
-      </if>
-      <if test="operatorTime != null">
-        #{operatorTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="operatorIp != null">
-        #{operatorIp,jdbcType=VARCHAR},
-      </if>
-      <if test="status != null">
-        #{status,jdbcType=INTEGER},
-      </if>
-    </trim>
-  </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.jack006.model.SysLog">
-    update sys_log
-    <set>
-      <if test="type != null">
-        type = #{type,jdbcType=INTEGER},
-      </if>
-      <if test="targetId != null">
-        target_id = #{targetId,jdbcType=INTEGER},
-      </if>
-      <if test="oldValue != null">
-        old_value = #{oldValue,jdbcType=VARCHAR},
-      </if>
-      <if test="newValue != null">
-        new_value = #{newValue,jdbcType=VARCHAR},
-      </if>
-      <if test="operator != null">
-        operator = #{operator,jdbcType=VARCHAR},
-      </if>
-      <if test="operatorTime != null">
-        operator_time = #{operatorTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="operatorIp != null">
-        operator_ip = #{operatorIp,jdbcType=VARCHAR},
-      </if>
-      <if test="status != null">
-        status = #{status,jdbcType=INTEGER},
-      </if>
-    </set>
-    where id = #{id,jdbcType=INTEGER}
-  </update>
-  <update id="updateByPrimaryKey" parameterType="com.jack006.model.SysLog">
-    update sys_log
-    set type = #{type,jdbcType=INTEGER},
-      target_id = #{targetId,jdbcType=INTEGER},
-      old_value = #{oldValue,jdbcType=VARCHAR},
-      new_value = #{newValue,jdbcType=VARCHAR},
-      operator = #{operator,jdbcType=VARCHAR},
-      operator_time = #{operatorTime,jdbcType=TIMESTAMP},
-      operator_ip = #{operatorIp,jdbcType=VARCHAR},
-      status = #{status,jdbcType=INTEGER}
-    where id = #{id,jdbcType=INTEGER}
-  </update>
-  <resultMap id="BaseResultMap" type="com.jack006.model.SysLog">
-    <id column="id" jdbcType="INTEGER" property="id" />
-    <result column="type" jdbcType="INTEGER" property="type" />
-    <result column="target_id" jdbcType="INTEGER" property="targetId" />
-    <result column="old_value" jdbcType="VARCHAR" property="oldValue" />
-    <result column="new_value" jdbcType="VARCHAR" property="newValue" />
-    <result column="operator" jdbcType="VARCHAR" property="operator" />
-    <result column="operator_time" jdbcType="TIMESTAMP" property="operatorTime" />
-    <result column="operator_ip" jdbcType="VARCHAR" property="operatorIp" />
-    <result column="status" jdbcType="INTEGER" property="status" />
-  </resultMap>
-  <sql id="Base_Column_List">
-    id, type, target_id, old_value, new_value, operator, operator_time, operator_ip, 
-    status
-  </sql>
-  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
-    select 
-    <include refid="Base_Column_List" />
-    from sys_log
-    where id = #{id,jdbcType=INTEGER}
-  </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
-    delete from sys_log
-    where id = #{id,jdbcType=INTEGER}
-  </delete>
-  <insert id="insert" parameterType="com.jack006.model.SysLog">
-    insert into sys_log (id, type, target_id, 
-      old_value, new_value, operator, 
-      operator_time, operator_ip, status
-      )
-    values (#{id,jdbcType=INTEGER}, #{type,jdbcType=INTEGER}, #{targetId,jdbcType=INTEGER}, 
-      #{oldValue,jdbcType=VARCHAR}, #{newValue,jdbcType=VARCHAR}, #{operator,jdbcType=VARCHAR}, 
-      #{operatorTime,jdbcType=TIMESTAMP}, #{operatorIp,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER}
-      )
-  </insert>
-  <insert id="insertSelective" parameterType="com.jack006.model.SysLog">
-    insert into sys_log
-    <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="id != null">
-        id,
-      </if>
-      <if test="type != null">
-        type,
-      </if>
-      <if test="targetId != null">
-        target_id,
-      </if>
-      <if test="oldValue != null">
-        old_value,
-      </if>
-      <if test="newValue != null">
-        new_value,
-      </if>
-      <if test="operator != null">
-        operator,
-      </if>
-      <if test="operatorTime != null">
-        operator_time,
-      </if>
-      <if test="operatorIp != null">
-        operator_ip,
-      </if>
-      <if test="status != null">
-        status,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="id != null">
-        #{id,jdbcType=INTEGER},
-      </if>
-      <if test="type != null">
-        #{type,jdbcType=INTEGER},
-      </if>
-      <if test="targetId != null">
-        #{targetId,jdbcType=INTEGER},
-      </if>
-      <if test="oldValue != null">
-        #{oldValue,jdbcType=VARCHAR},
-      </if>
-      <if test="newValue != null">
-        #{newValue,jdbcType=VARCHAR},
-      </if>
-      <if test="operator != null">
-        #{operator,jdbcType=VARCHAR},
-      </if>
-      <if test="operatorTime != null">
-        #{operatorTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="operatorIp != null">
-        #{operatorIp,jdbcType=VARCHAR},
-      </if>
-      <if test="status != null">
-        #{status,jdbcType=INTEGER},
-      </if>
-    </trim>
-  </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.jack006.model.SysLog">
-    update sys_log
-    <set>
-      <if test="type != null">
-        type = #{type,jdbcType=INTEGER},
-      </if>
-      <if test="targetId != null">
-        target_id = #{targetId,jdbcType=INTEGER},
-      </if>
-      <if test="oldValue != null">
-        old_value = #{oldValue,jdbcType=VARCHAR},
-      </if>
-      <if test="newValue != null">
-        new_value = #{newValue,jdbcType=VARCHAR},
-      </if>
-      <if test="operator != null">
-        operator = #{operator,jdbcType=VARCHAR},
-      </if>
-      <if test="operatorTime != null">
-        operator_time = #{operatorTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="operatorIp != null">
-        operator_ip = #{operatorIp,jdbcType=VARCHAR},
-      </if>
-      <if test="status != null">
-        status = #{status,jdbcType=INTEGER},
-      </if>
-    </set>
-    where id = #{id,jdbcType=INTEGER}
-  </update>
-  <update id="updateByPrimaryKey" parameterType="com.jack006.model.SysLog">
+  <update id="updateByPrimaryKey" parameterType="com.jack006.model.SysLog" >
     update sys_log
     set type = #{type,jdbcType=INTEGER},
       target_id = #{targetId,jdbcType=INTEGER},

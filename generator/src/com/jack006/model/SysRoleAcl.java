@@ -5,7 +5,7 @@ import java.util.Date;
 public class SysRoleAcl {
     private Integer id;
 
-    private String roleId;
+    private Integer roleId;
 
     private Integer aclId;
 
@@ -23,12 +23,12 @@ public class SysRoleAcl {
         this.id = id;
     }
 
-    public String getRoleId() {
+    public Integer getRoleId() {
         return roleId;
     }
 
-    public void setRoleId(String roleId) {
-        this.roleId = roleId == null ? null : roleId.trim();
+    public void setRoleId(Integer roleId) {
+        this.roleId = roleId;
     }
 
     public Integer getAclId() {

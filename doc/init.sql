@@ -82,8 +82,20 @@ create table `sys_role` (
 drop table if exists `sys_role_user`;
 create table `sys_role_user` (
 	`id` int not null auto_increment comment '主键ID',
-	`role_id` varchar(20) not null default '' comment '角色ID',
+	`role_id` int(20) not null default '' comment '角色ID',
 	`user_id` int not null default 1 comment '用户ID',
+	`operator` varchar(20) not null default '' comment '操作者',
+	`operator_time` datetime not null default now() comment '最后一次更新操作时间',
+	`operator_ip` varchar(20) not null default '' comment '最后更新操作者的IP',
+	primary key(id)
+)engine=innodb character set=utf8 collate = utf8_general_ci;
+
+// 角色权限表
+drop table if exists `sys_role_acl`;
+create table `sys_role_acl` (
+	`id` int not null auto_increment comment '主键ID',
+	`role_id` int not null default '' comment '角色ID',
+	`acl_id` int not null default 1 comment '权限ID',
 	`operator` varchar(20) not null default '' comment '操作者',
 	`operator_time` datetime not null default now() comment '最后一次更新操作时间',
 	`operator_ip` varchar(20) not null default '' comment '最后更新操作者的IP',

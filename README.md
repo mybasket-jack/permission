@@ -29,3 +29,8 @@
 - 编写 save update service逻辑
 - 编写RoleController
 - 编写角色管理页面，新增和修改的交互
+
+# 角色权限
+- 角色权限树结构接口开发
+- role.jsp 引入zTree
+- 权限树生成

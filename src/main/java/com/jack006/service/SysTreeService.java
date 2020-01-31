@@ -3,10 +3,13 @@ package com.jack006.service;
 import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Multimap;
+import com.jack006.dao.SysAclMapper;
 import com.jack006.dao.SysAclModuleMapper;
 import com.jack006.dao.SysDeptMapper;
+import com.jack006.dto.AclDto;
 import com.jack006.dto.AclModuleLevelDto;
 import com.jack006.dto.DeptLevelDto;
+import com.jack006.model.SysAcl;
 import com.jack006.model.SysAclModule;
 import com.jack006.model.SysDept;
 import com.jack006.util.LevelUtil;
@@ -14,9 +17,8 @@ import org.apache.commons.collections.CollectionUtils;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
+import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * 树结构的接口实现
@@ -31,7 +33,70 @@ public class SysTreeService {
     private SysDeptMapper sysDeptMapper;
     @Resource
     private SysAclModuleMapper sysAclModuleMapper;
+    @Resource
+    private SysCoreService sysCoreService;
+    @Resource
+    private SysAclMapper sysAclMapper;
 
+    public List<AclModuleLevelDto> roleTree(int roleId) {
+        // 1、取出当前用户已分配的权限点
+        List<SysAcl> userAclList = sysCoreService.getCurrentUserAclList();
+        // 2、取出当前角色已分配的权限点
+        List<SysAcl> roleAclList = sysCoreService.getCurrentRoleAclList(roleId);
+        // 3、当前系统所有的权限点
+        List<AclDto> aclDtoList = Lists.newArrayList();
+
+        // 构建权限Id的集合
+        Set<Integer> userAclIdSet = userAclList.stream().map(sysAcl -> sysAcl.getId()).collect(Collectors.toSet());
+        Set<Integer> roleAclIdSet = roleAclList.stream().map(sysAcl -> sysAcl.getId()).collect(Collectors.toSet());
+
+        // 构建当前系统所有的权限点
+        List<SysAcl> allAclList = sysAclMapper.getAll();
+        for (SysAcl acl : allAclList) {
+            AclDto dto = AclDto.adapt(acl);
+            if (userAclIdSet.contains(acl.getId())) {
+                dto.setHasAcl(true);
+            }
+            if (roleAclIdSet.contains(acl.getId())) {
+                dto.setChecked(true);
+            }
+            aclDtoList.add(dto);
+        }
+        return aclListToTree(aclDtoList);
+    }
+
+    public List<AclModuleLevelDto> aclListToTree(List<AclDto> aclDtoList) {
+        if (CollectionUtils.isEmpty(aclDtoList)) {
+            return Lists.newArrayList();
+        }
+        // 取出权限模块树
+        List<AclModuleLevelDto> aclModuleLevelList = aclModuleTree();
+
+        // 权限模块的ID的权限点Map
+        Multimap<Integer, AclDto> moduleIdAclMap = ArrayListMultimap.create();
+        for (AclDto acl : aclDtoList) {
+            if (acl.getStatus() == 1) {
+                moduleIdAclMap.put(acl.getAclModuleId(), acl);
+            }
+        }
+        bindAclsWithOrder(aclModuleLevelList,moduleIdAclMap);
+        return aclModuleLevelList;
+    }
+
+    // 权限点绑定到权限模块树上
+    public void bindAclsWithOrder(List<AclModuleLevelDto> aclModuleLevelList, Multimap<Integer, AclDto> moduleIdAclMap) {
+        if (CollectionUtils.isEmpty(aclModuleLevelList)) {
+            return;
+        }
+        for (AclModuleLevelDto dto : aclModuleLevelList) {
+            List<AclDto> aclDtoList = (List<AclDto>) moduleIdAclMap.get(dto.getId());
+            if (CollectionUtils.isNotEmpty(aclDtoList)) {
+                Collections.sort(aclDtoList, aclSeqComparator);
+                dto.setAclList(aclDtoList);
+            }
+            bindAclsWithOrder(dto.getAclModuleList(), moduleIdAclMap);
+        }
+    }
     public List<AclModuleLevelDto> aclModuleTree() {
         // 取出所有权限模块
         List<SysAclModule> aclModuleList = sysAclModuleMapper.getAllAclModule();
@@ -163,6 +228,13 @@ public class SysTreeService {
     private Comparator<AclModuleLevelDto> aclModuleSeqComparator = new Comparator<AclModuleLevelDto>() {
         @Override
         public int compare(AclModuleLevelDto o1, AclModuleLevelDto o2) {
+            return o1.getSeq() - o2.getSeq();
+        }
+    };
+
+    private Comparator<AclDto> aclSeqComparator = new Comparator<AclDto>() {
+        @Override
+        public int compare(AclDto o1, AclDto o2) {
             return o1.getSeq() - o2.getSeq();
         }
     };
