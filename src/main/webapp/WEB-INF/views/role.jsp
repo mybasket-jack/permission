@@ -147,6 +147,10 @@
 
         var roleListTemplate = $("#roleListTemplate").html();
         Mustache.parse(roleListTemplate);
+        var selectedUserListTemplate = $("#selectedUsersTemplate").html();
+        Mustache.parse(selectedUserListTemplate);
+        var unselectedUserListTemplate = $("#unSelectedUsersTemplate").html();
+        Mustache.parse(unselectedUserListTemplate);
 
         // 加载角色列表
         loadRoleList();
@@ -389,7 +393,6 @@
                 showMessage("保存角色与权限点的关系", " 请先在左侧选择需要操作的角色", false);
                 return ;
            }
-           console.log(getTreeSelectedId());
            $.ajax({
                url: "/sys/role/changeAcls.json",
                data: {
@@ -426,6 +429,76 @@
                 }
             })
         }
+
+        $("#roleTab a[data-toggle='tab']").on("shown.bs.tab", function (e) {
+            e.preventDefault();
+            if (lastRoleId == -1) {
+                showMessage("加载角色关系", "请先在左侧选择操作的角色", false);
+                return;
+            } 
+            if (e.target.getAttribute("href") == "#roleAclTab") {
+                selectFirstTab = true;
+                loadRoleAcl(lastRoleId);
+            }  else {
+                selectFirstTab = false;
+                loadRoleUser(lastRoleId)
+            }
+        });
+
+        function loadRoleUser (selectRoleId) {
+            $.ajax({
+               url: "/sys/role/users.json",
+               data: {
+                   roleId: selectRoleId
+               },
+                type: "POST",
+                success: function (result) {
+                    if (result.ret) {
+                        var renderedSelect = Mustache.render(selectedUserListTemplate,{userList: result.data.selected});
+                        var renderedUnSelect = Mustache.render(unselectedUserListTemplate,{userList: result.data.unselected});
+                        $("#roleUserList").html(renderedSelect + renderedUnSelect);
+
+                        // duallistbox 初始化
+                        if (!hasMultiSelect) {
+                            $('select[name="roleUserList"]').bootstrapDualListbox({
+                                showFilterInputs: false,
+                                moveOnSelect: false,
+                                inforText: false
+                            });
+                            hasMultiSelect = true;
+                        } else {
+                            $('select[name="roleUserList"]').bootstrapDualListbox('refresh',true);
+                        }
+                    } else {
+                        showMessage("加载角色用户数据", result.msg, false);
+                    }
+                }
+            });
+        }
+
+        $(".saveRoleUser").click(function (e) {
+            e.preventDefault();
+            if (lastRoleId == -1) {
+                showMessage("保存角色与用户的关系", " 请先在左侧选择需要操作的角色", false);
+                return ;
+            }
+            $.ajax({
+                url: "/sys/role/changeUsers.json",
+                data: {
+                    roleId: lastRoleId,
+                    userIds: $("#roleUserList").val() ? $("#roleUserList").val().join(",") : ""
+                },
+                type: "POST",
+                success: function (result) {
+                    if (result.ret) {
+                        showMessage("保存角色与用户的关系", "操作成功", false);
+                    } else {
+                        showMessage("保存角色与用户的关系", result.msg, false);
+                    }
+                }
+            })
+        });
+
     })
 </script>
 
