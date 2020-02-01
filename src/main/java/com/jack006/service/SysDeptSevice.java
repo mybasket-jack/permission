@@ -3,6 +3,7 @@ package com.jack006.service;
 import com.google.common.base.Preconditions;
 import com.jack006.common.RequestHolder;
 import com.jack006.dao.SysDeptMapper;
+import com.jack006.dao.SysUserMapper;
 import com.jack006.exception.ParamException;
 import com.jack006.model.SysDept;
 import com.jack006.param.DeptParam;
@@ -28,6 +29,8 @@ public class SysDeptSevice {
 
     @Resource
     private SysDeptMapper sysDeptMapper;
+    @Resource
+    private SysUserMapper sysUserMapper;
 
     // 部门保存
     public void save(DeptParam deptParam) {
@@ -97,5 +100,19 @@ public class SysDeptSevice {
             return null;
         }
         return dept.getLevel();
+    }
+
+    public void delete(int deptId) {
+        SysDept dept = sysDeptMapper.selectByPrimaryKey(deptId);
+        Preconditions.checkNotNull(dept,"待删除的部门不存在，无法删除");
+        // 判断是否存在子部门
+        if (sysDeptMapper.countByParentId(deptId) > 0) {
+            throw  new ParamException("当前部门下面有子部门，无法删除");
+        }
+        // 判断部门下是否有用户
+        if (sysUserMapper.countByDeptId(deptId) > 0) {
+            throw  new ParamException("当前部门下面有用户，无法删除");
+        }
+        sysDeptMapper.deleteByPrimaryKey(deptId);
     }
 }

@@ -56,9 +56,9 @@ public class SysUserService {
         sysUser.setOperatorIp(IpUtil.getUserIP(RequestHolder.getCurrentRequest()));
         sysUser.setOperatorTime(new Date());
         // TODO： sendEmail 通过邮件通知用户
-        Set<String> receiveSetStr = new HashSet<>();
-        receiveSetStr.add(sysUser.getMail());
-        MailUtil.send(new Mail("密码通知: 你的密码是",password,receiveSetStr));
+        //Set<String> receiveSetStr = new HashSet<>();
+        //receiveSetStr.add(sysUser.getMail());
+        //MailUtil.send(new Mail("密码通知: 你的密码是",password,receiveSetStr));
         sysUserMapper.insertSelective(sysUser);
     }
 

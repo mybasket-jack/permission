@@ -32,4 +32,5 @@ public interface SysUserMapper {
     List<SysUser> getUserListByIdList(@Param("idList") List<Integer> idList);
 
     List<SysUser> getAll();
+
 }

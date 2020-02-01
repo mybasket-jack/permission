@@ -2,6 +2,7 @@ package com.jack006.service;
 
 import com.google.common.base.Preconditions;
 import com.jack006.common.RequestHolder;
+import com.jack006.dao.SysAclMapper;
 import com.jack006.dao.SysAclModuleMapper;
 import com.jack006.exception.ParamException;
 import com.jack006.model.SysAclModule;
@@ -28,6 +29,8 @@ public class SysAclModuleService {
 
     @Resource
     private SysAclModuleMapper sysAclModuleMapper;
+    @Resource
+    private SysAclMapper sysAclMapper;
 
     public void save(AclModuleParam param) {
         BeanValidator.check(param);
@@ -98,5 +101,20 @@ public class SysAclModuleService {
             return null;
         }
         return aclModule.getLevel();
+    }
+
+    // 删除
+    public void delete(int aclModuleId) {
+        SysAclModule aclModule = sysAclModuleMapper.selectByPrimaryKey(aclModuleId);
+        Preconditions.checkNotNull(aclModule, "待删除的权限模块不存在，无法删除");
+        // 判断是否村存在子模块
+        if (sysAclModuleMapper.countByParentId(aclModule.getId()) > 0) {
+            throw new ParamException("当前模块下面有子模块，无法删除");
+        }
+        // 判断是否存在权限点
+        if (sysAclMapper.countByAclModuleId(aclModuleId) >0) {
+            throw new ParamException("当前模块下面有权限点，无法删除");
+        }
+        sysAclModuleMapper.deleteByPrimaryKey(aclModuleId);
     }
 }
