@@ -5,11 +5,9 @@ import com.google.common.collect.Sets;
 import com.jack006.common.RequestHolder;
 import com.jack006.dao.SysRoleUserMapper;
 import com.jack006.dao.SysUserMapper;
-import com.jack006.model.SysRoleAcl;
 import com.jack006.model.SysRoleUser;
 import com.jack006.model.SysUser;
 import com.jack006.util.IpUtil;
-import com.jack006.util.StringUtil;
 import org.apache.commons.collections.CollectionUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -43,7 +41,7 @@ public class SysRoleUserService {
         if (CollectionUtils.isEmpty(userIdList)) {
             return Lists.newArrayList();
         }
-        return sysUserMapper.getUserListByIdList(userIdList);
+        return sysUserMapper.getByIdList(userIdList);
     }
 
     public void changeRoleUsers(int roleId, List<Integer> userIdList) {
@@ -78,4 +76,6 @@ public class SysRoleUserService {
         }
         sysRoleUserMapper.batchInsert(roleUserList);
     }
+
+
 }

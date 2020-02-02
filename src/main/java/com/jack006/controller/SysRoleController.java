@@ -83,7 +83,7 @@ public class SysRoleController {
 
     @RequestMapping("/users.json")
     @ResponseBody
-    public JsonData loadRoleUser(@RequestParam("roleId") int roleId) {
+    public JsonData users(@RequestParam("roleId") int roleId) {
         List<SysUser> selectedUserList = sysRoleUserService.getUserListByRoleId(roleId);
         List<SysUser> allUserList = sysUserService.getAll();
         List<SysUser> unSelectedUserList = Lists.newArrayList();
@@ -110,4 +110,5 @@ public class SysRoleController {
         sysRoleUserService.changeRoleUsers(roleId, userIdList);
         return JsonData.success();
     }
+
 }

@@ -505,7 +505,6 @@
                     var rendered = Mustache.render(aclListTemplate, {
                         aclList : result.data.data,
                         "showAclModuleName" : function () {
-                            console.log(aclModuleMap[this.aclModuleId].name);
                             return aclModuleMap[this.aclModuleId].name;
                         },
                         "showStatus" : function () {
@@ -552,6 +551,25 @@
 
         //权限点的编辑
         function bindAclClick() {
+            $(".acl-role").click(function (e) {
+                e.preventDefault();
+                e.stopPropagation();
+                var aclId = $(this).attr("data-id");
+                $.ajax({
+                    url: "/sys/acl/acls.json",
+                    data: {
+                        aclId: aclId
+                    },
+                    type: "POST",
+                    success: function(result) {
+                        if (result.ret) {
+                            console.log(result.data);
+                        } else {
+                            showMessage("获取用户权限数据", result.msg, false);
+                        }
+                    }
+                })
+            });
             $(".acl-edit").click(function (e) {
                 e.preventDefault();
                 e.stopPropagation();

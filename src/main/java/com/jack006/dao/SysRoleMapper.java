@@ -1,5 +1,6 @@
 package com.jack006.dao;
 
+import com.jack006.model.SysAcl;
 import com.jack006.model.SysRole;
 import org.apache.ibatis.annotations.Param;
 
@@ -21,4 +22,6 @@ public interface SysRoleMapper {
     int countByName(@Param("name") String name, @Param("id") Integer id);
 
     List<SysRole> getAll();
+
+    List<SysRole> getByIdList(@Param("idList") List<Integer> idList);
 }

@@ -1,5 +1,6 @@
 package com.jack006.dao;
 
+import com.jack006.model.SysRole;
 import com.jack006.model.SysRoleAcl;
 import org.apache.ibatis.annotations.Param;
 
@@ -23,4 +24,6 @@ public interface SysRoleAclMapper {
     void deleteByRoleId(@Param("roleId") int roleId);
 
     void batchInsert(@Param("roleAclList") List<SysRoleAcl> roleAclList);
+
+    List<Integer> getRoleIdListByAclId(@Param("aclId") int aclId);
 }
