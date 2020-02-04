@@ -8,7 +8,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.annotation.Resource;
-import javax.servlet.Servlet;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -68,6 +67,7 @@ public class UserController {
         if (StringUtils.isNotBlank(ret)) {
             request.setAttribute("ret",ret);
         }
+
         String path = "/signin.jsp";
         // 请求转发
         request.getRequestDispatcher(path).forward(request,response);

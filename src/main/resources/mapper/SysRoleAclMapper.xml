@@ -132,4 +132,5 @@
     FROM sys_role_acl
     WHERE acl_id = #{aclId}
   </select>
+
 </mapper>
