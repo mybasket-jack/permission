@@ -50,8 +50,9 @@
 # 权限缓存
 - RedisPool
 - Redis.xml Redis.properties
+- SysCacheService
 
-#权限操作记录
+# 权限操作记录
 - SysLogController
 - SearchLogDto SearchLogParam
 - SysLogService
