@@ -32,7 +32,7 @@
       #{status,jdbcType=INTEGER}, #{remark,jdbcType=VARCHAR}, #{operator,jdbcType=VARCHAR}, 
       #{operatorTime,jdbcType=TIMESTAMP}, #{operatorIp,jdbcType=VARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="com.jack006.model.SysRole" >
+  <insert id="insertSelective" parameterType="com.jack006.model.SysRole" keyProperty="id" useGeneratedKeys="true">
     insert into sys_role
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="id != null" >

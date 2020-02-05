@@ -45,3 +45,26 @@
 - 获取用户分配的权限和角色接口实现
 
 # 权限拦截
+- AclControllerFilter
+
+# 权限缓存
+- RedisPool
+- Redis.xml Redis.properties
+
+#权限操作记录
+- SysLogController
+- SearchLogDto SearchLogParam
+- SysLogService
+
+![用户管理](https://upload-images.jianshu.io/upload_images/3944205-89ac80243b7e2503.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+
+![角色管理](https://upload-images.jianshu.io/upload_images/3944205-868b016f61fce729.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+
+
+![权限管理](https://upload-images.jianshu.io/upload_images/3944205-8ba30e52c6dc207b.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+
+
+![权限拦截](https://upload-images.jianshu.io/upload_images/3944205-d4b6997d1f740fe7.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+
+![权限更新记录](https://upload-images.jianshu.io/upload_images/3944205-03ec07ffa29f5087.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+

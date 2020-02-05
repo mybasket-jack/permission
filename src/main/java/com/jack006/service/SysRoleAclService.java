@@ -2,10 +2,14 @@ package com.jack006.service;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
+import com.jack006.beans.LogType;
 import com.jack006.common.RequestHolder;
+import com.jack006.dao.SysLogMapper;
 import com.jack006.dao.SysRoleAclMapper;
+import com.jack006.model.SysLogWithBLOBs;
 import com.jack006.model.SysRoleAcl;
 import com.jack006.util.IpUtil;
+import com.jack006.util.JsonMapper;
 import org.apache.commons.collections.CollectionUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -26,6 +30,8 @@ public class SysRoleAclService {
 
     @Resource
     private SysRoleAclMapper sysRoleAclMapper;
+    @Resource
+    private SysLogMapper sysLogMapper;
 
     public void changeRoleAcls(Integer roleId, List<Integer> aclIdList) {
         List<Integer> originAclIdList = sysRoleAclMapper.getAclIdListByRoleIdList(Lists.newArrayList(roleId));
@@ -39,6 +45,7 @@ public class SysRoleAclService {
             }
         }
         updateRoleAcls(roleId, aclIdList);
+        saveRoleAclLog(roleId,originAclIdList, aclIdList);
     }
 
     @Transactional
@@ -58,5 +65,18 @@ public class SysRoleAclService {
             roleAclList.add(roleAcl);
         }
         sysRoleAclMapper.batchInsert(roleAclList);
+    }
+
+    private void saveRoleAclLog(int roleId, List<Integer> before, List<Integer> after) {
+        SysLogWithBLOBs sysLog = new SysLogWithBLOBs();
+        sysLog.setType(LogType.TYPE_ROLE_ACL);
+        sysLog.setTargetId(roleId);
+        sysLog.setOldValue(before == null ? "" : JsonMapper.obj2String(before));
+        sysLog.setNewValue(after == null ? "" : JsonMapper.obj2String(after));
+        sysLog.setOperator(RequestHolder.getCurrentUser().getUsername());
+        sysLog.setOperatorTime(new Date());
+        sysLog.setOperatorIp(IpUtil.getUserIP(RequestHolder.getCurrentRequest()));
+        sysLog.setStatus(1);
+        sysLogMapper.insertSelective(sysLog);
     }
 }

@@ -32,6 +32,8 @@ public class SysUserService {
 
     @Resource
     private SysUserMapper sysUserMapper;
+    @Resource
+    private SysLogService sysLogService;
 
     // 保存用户
     @Transactional
@@ -60,6 +62,7 @@ public class SysUserService {
         //receiveSetStr.add(sysUser.getMail());
         //MailUtil.send(new Mail("密码通知: 你的密码是",password,receiveSetStr));
         sysUserMapper.insertSelective(sysUser);
+        sysLogService.saveUserLog(null, sysUser);
     }
 
     // 更新用户
@@ -82,6 +85,7 @@ public class SysUserService {
         after.setOperatorIp(IpUtil.getUserIP(RequestHolder.getCurrentRequest()));
         after.setOperatorTime(new Date());
         sysUserMapper.updateByPrimaryKeySelective(after);
+        sysLogService.saveUserLog(before, after);
     }
 
     public boolean checkEmailExist(String mail, Integer userId) {

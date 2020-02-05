@@ -6,6 +6,7 @@ import com.jack006.dao.SysDeptMapper;
 import com.jack006.dao.SysUserMapper;
 import com.jack006.exception.ParamException;
 import com.jack006.model.SysDept;
+import com.jack006.model.SysLog;
 import com.jack006.param.DeptParam;
 import com.jack006.util.BeanValidator;
 import com.jack006.util.IpUtil;
@@ -31,6 +32,8 @@ public class SysDeptSevice {
     private SysDeptMapper sysDeptMapper;
     @Resource
     private SysUserMapper sysUserMapper;
+    @Resource
+    private SysLogService sysLogService;
 
     // 部门保存
     public void save(DeptParam deptParam) {
@@ -46,6 +49,7 @@ public class SysDeptSevice {
         dept.setOperatorIp(IpUtil.getUserIP(RequestHolder.getCurrentRequest()));
         dept.setOperatorTime(new Date());
         sysDeptMapper.insertSelective(dept);
+        sysLogService.saveDeptLog(null, dept);
     }
 
     public void update(DeptParam deptParam) {
@@ -65,6 +69,7 @@ public class SysDeptSevice {
         after.setOperatorIp(IpUtil.getUserIP(RequestHolder.getCurrentRequest()));
         after.setOperatorTime(new Date());
         updateWithChild(before,after);
+        sysLogService.saveDeptLog(before, after);
     }
 
     @Transactional

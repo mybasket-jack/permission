@@ -1,17 +1,20 @@
 package com.jack006.model;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.NoArgsConstructor;
+
 import java.util.Date;
 
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class SysLog {
     private Integer id;
 
     private Integer type;
 
     private Integer targetId;
-
-    private String oldValue;
-
-    private String newValue;
 
     private String operator;
 
@@ -43,22 +46,6 @@ public class SysLog {
 
     public void setTargetId(Integer targetId) {
         this.targetId = targetId;
-    }
-
-    public String getOldValue() {
-        return oldValue;
-    }
-
-    public void setOldValue(String oldValue) {
-        this.oldValue = oldValue == null ? null : oldValue.trim();
-    }
-
-    public String getNewValue() {
-        return newValue;
-    }
-
-    public void setNewValue(String newValue) {
-        this.newValue = newValue == null ? null : newValue.trim();
     }
 
     public String getOperator() {

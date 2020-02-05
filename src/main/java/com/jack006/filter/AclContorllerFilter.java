@@ -65,7 +65,7 @@ public class AclContorllerFilter implements Filter {
         }
         // 判断是否有权限访问
         SysCoreService sysCoreService = ApplicationContextHelper.popBean(SysCoreService.class);
-        if (!sysCoreService.hasAcl(servletPath)) {
+        if (!sysCoreService.hasUrlAcl(servletPath)) {
             log.info("{} visit {}, but no login, parameter: {}",JsonMapper.obj2String(sysUser),servletPath, JsonMapper.obj2String(requestMap));
             noAuth(request,response);
             return;

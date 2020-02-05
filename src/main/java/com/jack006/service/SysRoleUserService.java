@@ -2,12 +2,16 @@ package com.jack006.service;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
+import com.jack006.beans.LogType;
 import com.jack006.common.RequestHolder;
+import com.jack006.dao.SysLogMapper;
 import com.jack006.dao.SysRoleUserMapper;
 import com.jack006.dao.SysUserMapper;
+import com.jack006.model.SysLogWithBLOBs;
 import com.jack006.model.SysRoleUser;
 import com.jack006.model.SysUser;
 import com.jack006.util.IpUtil;
+import com.jack006.util.JsonMapper;
 import org.apache.commons.collections.CollectionUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -30,6 +34,9 @@ public class SysRoleUserService {
     private SysRoleUserMapper sysRoleUserMapper;
     @Resource
     private SysUserMapper sysUserMapper;
+    @Resource
+    private SysLogMapper sysLogMapper;
+
 
     /**
      * 获取当前选中角色的用户列表
@@ -57,6 +64,7 @@ public class SysRoleUserService {
         }
         // 更新之前先删除
         updateRoleUsers(roleId, userIdList);
+        saveRoleUserLog(roleId,originUserIdList,userIdList);
     }
 
     @Transactional
@@ -77,5 +85,16 @@ public class SysRoleUserService {
         sysRoleUserMapper.batchInsert(roleUserList);
     }
 
-
+    private void saveRoleUserLog(int roleId, List<Integer> before, List<Integer> after) {
+        SysLogWithBLOBs sysLog = new SysLogWithBLOBs();
+        sysLog.setType(LogType.TYPE_ROLE_USER);
+        sysLog.setTargetId(roleId);
+        sysLog.setOldValue(before == null ? "" : JsonMapper.obj2String(before));
+        sysLog.setNewValue(after == null ? "" : JsonMapper.obj2String(after));
+        sysLog.setOperator(RequestHolder.getCurrentUser().getUsername());
+        sysLog.setOperatorTime(new Date());
+        sysLog.setOperatorIp(IpUtil.getUserIP(RequestHolder.getCurrentRequest()));
+        sysLog.setStatus(1);
+        sysLogMapper.insertSelective(sysLog);
+    }
 }
